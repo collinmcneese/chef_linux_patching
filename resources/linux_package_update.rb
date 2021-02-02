@@ -9,6 +9,8 @@ description 'Use the **linux_package_update** resource to lookup the listing of 
 property :package_options, String, description: 'Options to pass to the package resource for the update function'
 property :use_schedule, [true, false, nil], description: 'Only run the update process during scheduled time for the node.'
 property :use_data_bag, [true, false, nil], description: 'Use data_bag item contents as source for list of update packages.'
+property :debug, [true, false, nil], description: 'Include debug output for packages to be updated.'
+property :dry_run, [true, false, nil], description: 'Do not apply updates but run through what would be updated.'
 
 action :update do
   if new_resource.use_schedule
@@ -31,8 +33,10 @@ action :update do
       # Only add this package to the update list if it is installed on the node with a matching arch
       next unless node['packages'].keys.include? pkg_name
       next unless node['packages'][pkg_name]['arch'] == pkg_arch
-      # Display package information in output
-      pp pkg
+      # Display package information in output in debug mode
+      if node['linux_patching']['debug'] || new_resource.debug
+        puts "Upgrading: #{pkg_name} - #{node['packages'][pkg_name]['version']}-#{node['packages'][pkg_name]['release']} ---> #{pkg_name} - #{pkg['version']}"
+      end
       # Skip updating any package which is in the frozen list
       next if my_frozen_packages.include?(pkg['package'])
       # Update the arrays which will be used to run the `package` resource with any versions from the update list
@@ -47,6 +51,7 @@ action :update do
       arch arch_list
       options new_resource.package_options
       not_if { package_list.empty? }
+      not_if { new_resource.dry_run }
     end
   else
     # When not using data bag for source of update listing we will use the built-in package manager to update from our upstream source.

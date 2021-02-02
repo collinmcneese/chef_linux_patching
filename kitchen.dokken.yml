@@ -119,6 +119,8 @@ suites:
       inspec_tests:
         - test/integration/default
     attributes:
+      linux_patching:
+          debug: true
   - name: update
     named_run_list: update_patchlist
     attributes:
