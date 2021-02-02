@@ -1,0 +1,3 @@
+# Disables ChefStyle/UsePlatformHelpers for Chef Infra v12 compatiblity
+Chef/Style/UsePlatformHelpers:
+  Enabled: false
