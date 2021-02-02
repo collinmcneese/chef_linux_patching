@@ -23,4 +23,4 @@ Berksfile.lock
 .zero-knife.rb
 Policyfile.lock.json
 
-data_bags/**.json
+data_bags/**/updates*.json
