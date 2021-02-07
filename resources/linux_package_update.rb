@@ -77,6 +77,20 @@ action :update do
   end
 end
 
+action :cache_refresh do
+  if debian?
+    apt_update 'name' do
+      action :periodic
+    end
+  elsif fedora_derived?
+    execute 'yum_check_update' do
+      command 'yum check-update'
+      action :run
+      returns [0, 100]
+    end
+  end
+end
+
 action_class do
   # Include custom helpers
   extend LinuxPatching::Helpers

@@ -5,6 +5,7 @@ Work-In-Progress for applying Linux OS patches to systems without using an upstr
 - [linux_patching](#linux_patching)
   - [Supported Platforms](#supported-platforms)
   - [Attributes](#attributes)
+    - [Attributes - default](#attributes---default)
     - [Attributes - base_packages](#attributes---base_packages)
     - [Attributes - freeze_packages](#attributes---freeze_packages)
     - [Attributes - updates_packages](#attributes---updates_packages)
@@ -26,6 +27,23 @@ Work-In-Progress for applying Linux OS patches to systems without using an upstr
 
 ## Attributes
 
+All attributes used by this cookbook are nested under the `linux_patching` key.
+
+### Attributes - default
+
+Default attributes are used in this cookbook to provide values which can be overridden via policy as needed for deployments
+
+```ruby
+# Enables verbosity for some of the patching components, disabled by default.
+default['linux_patching']['debug'] = false
+
+# Directories which should be present on the system, used by config and patch processes
+default['linux_patching']['dirs'] = {
+  base: '/path/to/dir',
+  logging: '/path/to/dir',
+}
+```
+
 ### Attributes - base_packages
 
 Used to populate listing of base packages which should exist on systems without a specific version pin.
@@ -41,6 +59,8 @@ default['linux_patching']['base_packages'] = {
   },
 }
 ```
+
+- __base_packages__ : Base packages are consumed by the `config` recipe to specify packages which should always exist on a system.
 
 ### Attributes - freeze_packages
 

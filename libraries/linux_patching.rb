@@ -27,6 +27,14 @@ module LinuxPatching
       []
     end
 
+    def base_dir
+      node['linux_patching']['dirs']['base']
+    end
+
+    def log_dir
+      node['linux_patching']['dirs']['logging']
+    end
+
     def patch_window_active?
       # Fetch schedule data from data_bag
       bag_data = data_bag_item(node['linux_patching']['update_packages']['data_bag'], 'schedule')
