@@ -8,7 +8,6 @@ Work-In-Progress for applying Linux OS patches to systems without using an upstr
     - [Attributes - default](#attributes---default)
     - [Attributes - base_packages](#attributes---base_packages)
     - [Attributes - freeze_packages](#attributes---freeze_packages)
-    - [Attributes - updates_packages](#attributes---updates_packages)
   - [Data Bags](#data-bags)
   - [Helpers](#helpers)
   - [Resources](#resources)
@@ -42,6 +41,9 @@ default['linux_patching']['dirs'] = {
   base: '/path/to/dir',
   logging: '/path/to/dir',
 }
+
+# Data bag name to use for item lookups
+default['linux_patching']['data_bag'] = 'data_bag_name'
 ```
 
 ### Attributes - base_packages
@@ -75,14 +77,6 @@ default['linux_patching']['freeze_packages'] = {
     ],
   },
 }
-```
-
-### Attributes - updates_packages
-
-Data bag name to use for item lookups.
-
-```ruby
-default['linux_patching']['update_packages']['data_bag'] = 'data_bag_name'
 ```
 
 ## Data Bags

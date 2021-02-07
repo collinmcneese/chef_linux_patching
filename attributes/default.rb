@@ -6,3 +6,6 @@ default['linux_patching']['dirs'] = {
   base: '/var/linux_patching_cookbook',
   logging: '/var/linux_patching_cookbook/logs',
 }
+
+# Data bag name to use for item lookups
+default['linux_patching']['data_bag'] = 'linux_patching'

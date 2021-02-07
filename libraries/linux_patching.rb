@@ -21,7 +21,7 @@ module LinuxPatching
 
     def my_update_packages
       # Get list of available packages from Data Bag
-      data_bag_item(node['linux_patching']['update_packages']['data_bag'], "updates-#{node['platform']}-#{node['platform_version'].to_i}")['packages']
+      data_bag_item(node['linux_patching']['data_bag'], "updates-#{node['platform']}-#{node['platform_version'].to_i}")['packages']
     rescue
       Chef::Log.warn('Unable to determine update packages using my_update_packages helper method.')
       []
@@ -37,7 +37,7 @@ module LinuxPatching
 
     def patch_window_active?
       # Fetch schedule data from data_bag
-      bag_data = data_bag_item(node['linux_patching']['update_packages']['data_bag'], 'schedule')
+      bag_data = data_bag_item(node['linux_patching']['data_bag'], 'schedule')
       # Use the data for this node's policy_group
       if bag_data["#{node['policy_group']}"]
         schedule = bag_data["#{node['policy_group']}"]
