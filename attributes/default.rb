@@ -9,3 +9,9 @@ default['linux_patching']['dirs'] = {
 
 # Data bag name to use for item lookups
 default['linux_patching']['data_bag'] = 'linux_patching'
+
+# Set the patch properties via attributes so that they can be easily targeted via policy
+default['linux_patching']['patch_run']['default'] = {
+  use_schedule: false,
+  use_data_bag: false,
+}
