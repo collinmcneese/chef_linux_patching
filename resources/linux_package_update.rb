@@ -97,6 +97,14 @@ action :cache_refresh do
       command 'yum check-update'
       action :run
       returns [0, 100]
+      only_if 'which yum'
+      not_if 'which dnf'
+    end
+    execute 'dnf_check-update' do
+      command 'dnf check-update'
+      action :run
+      returns [0, 100]
+      only_if 'which dnf'
     end
   end
 end
