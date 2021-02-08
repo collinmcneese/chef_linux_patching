@@ -72,6 +72,16 @@ action :update do
         YUM
         action :run
         only_if 'which yum'
+        not_if 'which dnf'
+      end
+      execute 'dnf_update' do
+        command <<~DNF
+        dnf check-update
+        dnf update -y #{new_resource.package_options}
+        DNF
+        action :run
+        not_if 'which yum'
+        only_if 'which dnf'
       end
     end
   end
