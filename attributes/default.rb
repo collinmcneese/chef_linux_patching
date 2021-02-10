@@ -1,3 +1,6 @@
+# Enrollment status, cookbook logic will not process node is enrolled
+default['linux_patching']['enrollment'] = true
+
 # Enables verbosity for some of the patching components, disabled by default.
 default['linux_patching']['debug'] = false
 

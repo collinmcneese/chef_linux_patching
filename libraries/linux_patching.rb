@@ -39,11 +39,11 @@ module LinuxPatching
       # Fetch schedule data from data_bag
       bag_data = data_bag_item(node['linux_patching']['data_bag'], 'schedule')
       # Use the data for this node's policy_group
-      if bag_data["#{node['policy_group']}"]
-        schedule = bag_data["#{node['policy_group']}"]
+      if bag_data["#{node['policy_group']}"] || bag_data["#{node['chef_environment']}"]
+        schedule = bag_data["#{node['policy_group']}"] || bag_data["#{node['chef_environment']}"]
         # See if the current (now) time is in the patch window
-        if ::DateTime.now() >= ::DateTime.parse("#{schedule['date']} #{schedule['start_hour']}") &&
-           ::DateTime.now() <= ::DateTime.parse("#{schedule['date']} #{schedule['end_hour']}")
+        if ::DateTime.now() >= ::DateTime.parse("#{schedule['start_date']} #{schedule['start_hour']}") &&
+           ::DateTime.now() <= ::DateTime.parse("#{schedule['end_date']} #{schedule['end_hour']}")
           puts ' Patching window is currently active!'
           # Return a value of true if patching window is active
           true
