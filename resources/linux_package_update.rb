@@ -19,12 +19,6 @@ action :update do
   end
 
   if new_resource.use_data_bag
-    # When using data bag for source of update listing.
-    # Create empty arrays which will be populated with applicable updates
-    package_list = []
-    arch_list = []
-    version_list = []
-
     # Iterate through available packages using my_update_packages helper method
     my_update_packages.each do |pkg|
       # Package Name and Arch are split with . delimiter.
@@ -39,19 +33,15 @@ action :update do
       end
       # Skip updating any package which is in the frozen list
       next if my_frozen_packages.include?(pkg['package'])
-      # Update the arrays which will be used to run the `package` resource with any versions from the update list
-      package_list << pkg_name
-      arch_list << pkg_arch
-      version_list << pkg['version']
-    end
-
-    package 'install_update_packages' do
-      package_name package_list
-      version version_list
-      arch arch_list
-      options new_resource.package_options
-      not_if { package_list.empty? }
-      not_if { new_resource.dry_run }
+      # Run upgrade for the package, allowing failure so that update process continues.
+      package pkg_name do
+        version pkg['version']
+        arch pkg_arch
+        options new_resource.package_options
+        not_if { new_resource.dry_run }
+        action :upgrade
+        ignore_failure true
+      end
     end
   else
     # When not using data bag for source of update listing we will use the built-in package manager to update from our upstream source.
