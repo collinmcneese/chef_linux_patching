@@ -2,7 +2,10 @@
 # Resource:: linux_package_update
 #
 
+resource_name :linux_package_update
 provides :linux_package_update
+
+unified_mode true
 
 description 'Use the **linux_package_update** resource to lookup the listing of available package versions and if the package is installed, update it to the latest version'
 

@@ -2,7 +2,10 @@
 # Resource:: inspec_exec
 #
 
+resource_name :inspec_exec
 provides :inspec_exec
+
+unified_mode true
 
 description 'Use the **inspec_exec** resource to execute Chef Inspec tests from within the cookbook'
 
