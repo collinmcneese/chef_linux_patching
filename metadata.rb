@@ -1,6 +1,6 @@
 name 'linux_patching'
 maintainer 'Collin McNeese'
-maintainer_email 'cmcneese@chef.io'
+maintainer_email 'collin@mydevsandbox.com'
 license 'Apache-2.0'
 description 'Installs/Configures linux_patching'
 version '1.0.0'
